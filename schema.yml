@@ -3,5 +3,493 @@ info:
   title: Survies API
   version: 1.0.0
   description: Dyanamic Survey API
-paths: {}
-components: {}
+paths:
+  /api/survey-responses/:
+    get:
+      operationId: survey_responses_list
+      tags:
+      - survey-responses
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SurveyResponse'
+          description: ''
+    post:
+      operationId: survey_responses_create
+      tags:
+      - survey-responses
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SurveyResponse'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SurveyResponse'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SurveyResponse'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SurveyResponse'
+          description: ''
+  /api/survey-responses/{id}/:
+    get:
+      operationId: survey_responses_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this survey response.
+        required: true
+      tags:
+      - survey-responses
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SurveyResponse'
+          description: ''
+    put:
+      operationId: survey_responses_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this survey response.
+        required: true
+      tags:
+      - survey-responses
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SurveyResponse'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SurveyResponse'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SurveyResponse'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SurveyResponse'
+          description: ''
+    patch:
+      operationId: survey_responses_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this survey response.
+        required: true
+      tags:
+      - survey-responses
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedSurveyResponse'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedSurveyResponse'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedSurveyResponse'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SurveyResponse'
+          description: ''
+    delete:
+      operationId: survey_responses_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this survey response.
+        required: true
+      tags:
+      - survey-responses
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /api/surveys/:
+    get:
+      operationId: surveys_list
+      tags:
+      - surveys
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Survey'
+          description: ''
+    post:
+      operationId: surveys_create
+      tags:
+      - surveys
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Survey'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Survey'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Survey'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Survey'
+          description: ''
+  /api/surveys/{id}/:
+    get:
+      operationId: surveys_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this survey.
+        required: true
+      tags:
+      - surveys
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Survey'
+          description: ''
+    put:
+      operationId: surveys_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this survey.
+        required: true
+      tags:
+      - surveys
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Survey'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Survey'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Survey'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Survey'
+          description: ''
+    patch:
+      operationId: surveys_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this survey.
+        required: true
+      tags:
+      - surveys
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedSurvey'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedSurvey'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedSurvey'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Survey'
+          description: ''
+    delete:
+      operationId: surveys_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this survey.
+        required: true
+      tags:
+      - surveys
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+components:
+  schemas:
+    Field:
+      type: object
+      properties:
+        label:
+          type: string
+          maxLength: 255
+        field_type:
+          $ref: '#/components/schemas/FieldTypeEnum'
+        required:
+          type: boolean
+        options:
+          type: string
+          nullable: true
+      required:
+      - field_type
+      - label
+    FieldResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        value:
+          type: string
+          nullable: true
+        section_response:
+          type: integer
+        field:
+          type: integer
+      required:
+      - field
+      - id
+      - section_response
+    FieldTypeEnum:
+      enum:
+      - text
+      - number
+      - date
+      - dropdown
+      - checkbox
+      - radio
+      type: string
+      description: |-
+        * `text` - Text
+        * `number` - Number
+        * `date` - Date
+        * `dropdown` - Dropdown
+        * `checkbox` - Checkbox
+        * `radio` - Radio
+    PatchedSurvey:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        sections:
+          type: array
+          items:
+            $ref: '#/components/schemas/Section'
+        title:
+          type: string
+          maxLength: 255
+        description:
+          type: string
+          nullable: true
+    PatchedSurveyResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        section_responses:
+          type: array
+          items:
+            $ref: '#/components/schemas/SectionResponse'
+        completed:
+          type: boolean
+        submitted_at:
+          type: string
+          format: date-time
+          nullable: true
+        last_saved_at:
+          type: string
+          format: date-time
+          readOnly: true
+        survey:
+          type: integer
+        user:
+          type: integer
+    Section:
+      type: object
+      properties:
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/Field'
+        title:
+          type: string
+          maxLength: 255
+      required:
+      - fields
+      - title
+    SectionResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        field_responses:
+          type: array
+          items:
+            $ref: '#/components/schemas/FieldResponse'
+        completed:
+          type: boolean
+        survey_response:
+          type: integer
+        section:
+          type: integer
+      required:
+      - field_responses
+      - id
+      - section
+      - survey_response
+    Survey:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        sections:
+          type: array
+          items:
+            $ref: '#/components/schemas/Section'
+        title:
+          type: string
+          maxLength: 255
+        description:
+          type: string
+          nullable: true
+      required:
+      - id
+      - sections
+      - title
+    SurveyResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        section_responses:
+          type: array
+          items:
+            $ref: '#/components/schemas/SectionResponse'
+        completed:
+          type: boolean
+        submitted_at:
+          type: string
+          format: date-time
+          nullable: true
+        last_saved_at:
+          type: string
+          format: date-time
+          readOnly: true
+        survey:
+          type: integer
+        user:
+          type: integer
+      required:
+      - id
+      - last_saved_at
+      - section_responses
+      - survey
+      - user
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid
