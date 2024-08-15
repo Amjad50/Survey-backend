@@ -8,7 +8,7 @@ authors = [
 dependencies = [
     "django>=5.1",
     "psycopg2>=2.9.9",
-    "drf-spectacular>=0.27.2",
+    "drf-spectacular[sidecar]>=0.27.2",
     "djangorestframework>=3.15.2",
 ]
 readme = "README.md"

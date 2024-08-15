@@ -1,0 +1,7 @@
+openapi: 3.0.3
+info:
+  title: Survies API
+  version: 1.0.0
+  description: Dyanamic Survey API
+paths: {}
+components: {}
