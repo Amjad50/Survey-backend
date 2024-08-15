@@ -3,9 +3,9 @@ from rest_framework.routers import DefaultRouter
 from .views import SurveyViewSet, SurveyResponseViewSet
 
 router = DefaultRouter()
-router.register(r'surveys', SurveyViewSet)
-router.register(r'survey-responses', SurveyResponseViewSet)
+router.register(r"surveys", SurveyViewSet)
+router.register(r"survey-responses", SurveyResponseViewSet)
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path("", include(router.urls)),
 ]
