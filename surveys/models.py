@@ -58,6 +58,66 @@ class FieldResponse(models.Model):
     value = models.JSONField(blank=True, null=False)
 
 
+class SurveyAnalytics(models.Model):
+    survey = models.OneToOneField(
+        Survey,
+        on_delete=models.CASCADE,
+        primary_key=True,
+        unique=True,
+    )
+    total_responses = models.PositiveIntegerField()
+    completed_responses = models.PositiveIntegerField()
+
+    unique_users = models.PositiveIntegerField()
+    max_responses = models.PositiveIntegerField()
+    max_responses_user = models.ForeignKey(
+        "auth.User", on_delete=models.CASCADE, null=True
+    )
+    average_responses_per_user = models.FloatField()
+
+
+class SectionAnalytics(models.Model):
+    survey_analytics = models.ForeignKey(
+        SurveyAnalytics, related_name="section_analytics", on_delete=models.CASCADE
+    )
+    section = models.ForeignKey(Section, on_delete=models.CASCADE)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["survey_analytics", "section"],
+                name="unique_survey_analytics_section",
+            )
+        ]
+
+
+class FieldAnalytics(models.Model):
+    section_analytics = models.ForeignKey(
+        SectionAnalytics, related_name="field_analytics", on_delete=models.CASCADE
+    )
+    field = models.ForeignKey(Field, on_delete=models.CASCADE)
+
+    number_of_responses = models.PositiveIntegerField()
+
+    # List of dictionaries with "value" and "count"
+    common_responses = models.JSONField(default=list)
+
+    # JSON with min, max, mean, median, mode, stddev
+    # null for non-number fields
+    for_number = models.JSONField(
+        default=dict,
+        null=True,
+    )
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["section_analytics", "field"],
+                name="unique_section_analytics_field",
+            )
+        ]
+
+
 auditlog.register(Survey)
 auditlog.register(Section)
 auditlog.register(Field)

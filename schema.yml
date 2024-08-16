@@ -4,6 +4,47 @@ info:
   version: 1.0.0
   description: Dynamic Survey API
 paths:
+  /api/survey-analytics/:
+    get:
+      operationId: survey_analytics_list
+      tags:
+      - survey-analytics
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SurveyAnalytics'
+          description: ''
+  /api/survey-analytics/{survey}/:
+    get:
+      operationId: survey_analytics_retrieve
+      parameters:
+      - in: path
+        name: survey
+        schema:
+          type: integer
+        description: A unique value identifying this survey analytics.
+        required: true
+      tags:
+      - survey-analytics
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SurveyAnalytics'
+          description: ''
   /api/survey-responses/:
     get:
       operationId: survey_responses_list
@@ -329,6 +370,22 @@ components:
       required:
       - field_type
       - label
+    FieldAnalytics:
+      type: object
+      properties:
+        field_id:
+          type: integer
+          readOnly: true
+        number_of_responses:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        common_responses: {}
+        for_number:
+          nullable: true
+      required:
+      - field_id
+      - number_of_responses
     FieldResponse:
       type: object
       properties:
@@ -410,6 +467,19 @@ components:
       required:
       - fields
       - title
+    SectionAnalytics:
+      type: object
+      properties:
+        section_id:
+          type: integer
+          readOnly: true
+        field_analytics:
+          type: array
+          items:
+            $ref: '#/components/schemas/FieldAnalytics'
+      required:
+      - field_analytics
+      - section_id
     SectionResponse:
       type: object
       properties:
@@ -446,6 +516,46 @@ components:
       - id
       - sections
       - title
+    SurveyAnalytics:
+      type: object
+      properties:
+        survey_id:
+          type: integer
+          readOnly: true
+        total_responses:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        completed_responses:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        section_analytics:
+          type: array
+          items:
+            $ref: '#/components/schemas/SectionAnalytics'
+        unique_users:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        max_responses:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        max_responses_user:
+          type: integer
+          nullable: true
+        average_responses_per_user:
+          type: number
+          format: double
+      required:
+      - average_responses_per_user
+      - completed_responses
+      - max_responses
+      - section_analytics
+      - survey_id
+      - total_responses
+      - unique_users
     SurveyResponse:
       type: object
       properties:

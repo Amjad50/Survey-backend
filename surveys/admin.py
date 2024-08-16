@@ -6,6 +6,9 @@ from .models import (
     SurveyResponse,
     SectionResponse,
     FieldResponse,
+    FieldAnalytics,
+    SectionAnalytics,
+    SurveyAnalytics,
 )
 
 
@@ -61,3 +64,38 @@ class SectionResponseAdmin(admin.ModelAdmin):
 @admin.register(FieldResponse)
 class FieldResponseAdmin(admin.ModelAdmin):
     list_display = ("section_response", "field", "value")
+
+
+class FieldAnalyticsInline(admin.StackedInline):
+    model = FieldAnalytics
+    extra = 0
+
+
+@admin.register(FieldAnalytics)
+class FieldAnalyticsAdmin(admin.ModelAdmin):
+    list_display = ("field", "number_of_responses", "common_responses", "for_number")
+
+
+@admin.register(SectionAnalytics)
+class SectionAnalyticsAdmin(admin.ModelAdmin):
+    list_display = ["section"]
+    inlines = [FieldAnalyticsInline]
+
+
+class SectionAnalyticsInline(admin.StackedInline):
+    model = SectionAnalytics
+    extra = 0
+
+
+@admin.register(SurveyAnalytics)
+class SurveyAnalyticsAdmin(admin.ModelAdmin):
+    list_display = (
+        "survey",
+        "total_responses",
+        "completed_responses",
+        "unique_users",
+        "max_responses",
+        "max_responses_user",
+        "average_responses_per_user",
+    )
+    inlines = [SectionAnalyticsInline]

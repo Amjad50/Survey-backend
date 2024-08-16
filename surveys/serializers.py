@@ -8,6 +8,8 @@ from .models import (
     FieldResponse,
 )
 
+from .tasks import update_survey_analytics
+
 
 class FieldSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(required=False)
@@ -146,9 +148,7 @@ class FieldResponseSerializer(serializers.ModelSerializer):
                     "Expected a string for text field type."
                 )
         elif field_type == "number":
-            try:
-                float(value)
-            except (TypeError, ValueError):
+            if not isinstance(value, (int, float)):
                 raise serializers.ValidationError(
                     "Expected a number for number field type."
                 )
@@ -319,6 +319,8 @@ class SurveyResponseSerializer(serializers.ModelSerializer):
             if section_response_serializer.is_valid(raise_exception=True):
                 section_response_serializer.save(survey_response=survey_response)
 
+        update_survey_analytics.delay_on_commit(survey_response.survey.id)
+
         return survey_response
 
     def update(self, instance, validated_data):
@@ -340,5 +342,7 @@ class SurveyResponseSerializer(serializers.ModelSerializer):
                 )
                 if section_response_serializer.is_valid(raise_exception=True):
                     section_response_serializer.save(survey_response=instance)
+
+        update_survey_analytics.delay_on_commit(instance.survey.id)
 
         return instance
