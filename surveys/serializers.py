@@ -119,6 +119,7 @@ class SurveySerializer(serializers.ModelSerializer):
 
 class FieldResponseSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(required=False)
+
     class Meta:
         model = FieldResponse
         exclude = ["section_response"]
