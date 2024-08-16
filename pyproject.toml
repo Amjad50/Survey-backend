@@ -7,11 +7,13 @@ authors = [
 ]
 dependencies = [
     "django>=5.1",
-    "psycopg2>=2.9.9",
     "drf-spectacular[sidecar]>=0.27.2",
     "djangorestframework>=3.15.2",
     "django-auditlog>=3.0.0",
     "django-cacheops>=7.0.2",
+    "psycopg2-binary>=2.9.9",
+    "python-dotenv>=1.0.1",
+    "gunicorn>=23.0.0",
 ]
 readme = "README.md"
 requires-python = ">= 3.8"
@@ -19,4 +21,6 @@ requires-python = ">= 3.8"
 [tool.rye]
 managed = true
 virtual = true
-dev-dependencies = []
+dev-dependencies = [
+    "psycopg2>=2.9.9",
+]

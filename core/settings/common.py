@@ -11,9 +11,14 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+from dotenv import load_dotenv
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
+
+dotenv_path = BASE_DIR / ".env"
+load_dotenv(dotenv_path=dotenv_path)
 
 
 # Quick-start development settings - unsuitable for production
@@ -25,8 +30,7 @@ SECRET_KEY = "django-insecure-%$si6t6p19yb67__ff*@ip80litp#2jbs7t2)j_n&kt_mzggou
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
@@ -93,30 +97,24 @@ WSGI_APPLICATION = "core.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "postgres",
-        "USER": "postgres",
-        "PASSWORD": "postgres",
-        "HOST": "localhost",
-        "PORT": "5432",
+        "NAME": os.environ.get("POSTGRES_DB"),
+        "USER": os.environ.get("POSTGRES_USER"),
+        "PASSWORD": os.environ.get("POSTGRES_PASSWORD"),
+        "HOST": os.environ.get("POSTGRES_URL"),
+        "PORT": os.environ.get("POSTGRES_PORT"),
     }
 }
 
 CACHEOPS_REDIS = {
-    "host": "localhost",  # redis-server is on same machine
-    "port": 6379,  # default redis port
-    # SELECT non-default redis database
-    # using separate redis db or redis instance
-    # is highly recommended
-    "db": 1,
+    "host": os.environ.get("REDIS_URL"),
+    "port": os.environ.get("REDIS_PORT"),
+    "db": os.environ.get("REDIS_DB", 1),
 }
 
-CACHEOPS_DEFAULTS = {
-    'timeout': 60*60
-}
+CACHEOPS_DEFAULTS = {"timeout": 60 * 60}
 
 CACHEOPS = {
     # Automatically cache any User.objects.get() calls for 15 minutes
@@ -170,6 +168,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = "static/"
+STATIC_ROOT = BASE_DIR / "static_files/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

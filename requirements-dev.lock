@@ -29,15 +29,20 @@ drf-spectacular-sidecar==2024.7.1
     # via drf-spectacular
 funcy==2.0
     # via django-cacheops
+gunicorn==23.0.0
 inflection==0.5.1
     # via drf-spectacular
 jsonschema==4.23.0
     # via drf-spectacular
 jsonschema-specifications==2023.12.1
     # via jsonschema
+packaging==24.1
+    # via gunicorn
 psycopg2==2.9.9
+psycopg2-binary==2.9.9
 python-dateutil==2.9.0.post0
     # via django-auditlog
+python-dotenv==1.0.1
 pyyaml==6.0.2
     # via drf-spectacular
 redis==5.0.8
