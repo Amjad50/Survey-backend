@@ -118,6 +118,7 @@ class SurveySerializer(serializers.ModelSerializer):
 
 
 class FieldResponseSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(required=False)
     class Meta:
         model = FieldResponse
         exclude = ["section_response"]
@@ -190,6 +191,7 @@ class FieldResponseSerializer(serializers.ModelSerializer):
 
 
 class SectionResponseSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(required=False)
     field_responses = FieldResponseSerializer(many=True)
 
     class Meta:
@@ -243,6 +245,7 @@ class SectionResponseSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         field_responses_data = validated_data.pop("field_responses", [])
         instance.completed = validated_data.get("completed", instance.completed)
+        instance.save()
 
         # Handle nested field responses
         for field_response_data in field_responses_data:
@@ -257,6 +260,8 @@ class SectionResponseSerializer(serializers.ModelSerializer):
                 FieldResponse.objects.create(
                     section_response=instance, **field_response_data
                 )
+
+        return instance
 
 
 class SurveyResponseSerializer(serializers.ModelSerializer):
@@ -317,8 +322,8 @@ class SurveyResponseSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         section_responses_data = validated_data.pop("section_responses", [])
-
         instance.completed = validated_data.get("completed", instance.completed)
+        instance.save()
 
         for section_response_data in section_responses_data:
             section_response_instance = instance.section_responses.filter(
@@ -334,3 +339,5 @@ class SurveyResponseSerializer(serializers.ModelSerializer):
                 )
                 if section_response_serializer.is_valid(raise_exception=True):
                     section_response_serializer.save(survey_response=instance)
+
+        return instance

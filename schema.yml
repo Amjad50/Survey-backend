@@ -334,13 +334,11 @@ components:
       properties:
         id:
           type: integer
-          readOnly: true
+        value: {}
         field:
           type: integer
-        value: {}
       required:
       - field
-      - id
     FieldTypeEnum:
       enum:
       - text
@@ -417,18 +415,16 @@ components:
       properties:
         id:
           type: integer
-          readOnly: true
-        section:
-          type: integer
         field_responses:
           type: array
           items:
             $ref: '#/components/schemas/FieldResponse'
         completed:
           type: boolean
+        section:
+          type: integer
       required:
       - field_responses
-      - id
       - section
     Survey:
       type: object
