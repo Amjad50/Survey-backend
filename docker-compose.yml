@@ -1,6 +1,7 @@
 services:
   app:
     build: .
+    entrypoint: ["/app/docker/run-server.sh"]
     environment:
       DJANGO_SETTINGS_MODULE: "core.settings.production"
       POSTGRES_URL: "db"
@@ -11,8 +12,28 @@ services:
       REDIS_URL: "redis"
       REDIS_PORT: "6379"
       REDIS_DB: "1"
+      CELERY_BROKER: "redis://redis:6379/2"
+      CELERY_BACKEND: "redis://redis:6379/2"
     volumes:
       - static_volume:/app/static_files
+    depends_on:
+      - db
+      - redis
+  celery:
+    build: .
+    entrypoint: ["/app/docker/run-celery.sh"]
+    environment:
+      DJANGO_SETTINGS_MODULE: "core.settings.production"
+      POSTGRES_URL: "db"
+      POSTGRES_PORT: "5432"
+      POSTGRES_DB: "postgres"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+      REDIS_URL: "redis"
+      REDIS_PORT: "6379"
+      REDIS_DB: "1"
+      CELERY_BROKER: "redis://redis:6379/2"
+      CELERY_BACKEND: "redis://redis:6379/2"
     depends_on:
       - db
       - redis

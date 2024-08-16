@@ -94,6 +94,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "core.wsgi.application"
 
+CELERY_BROKER_URL = os.environ.get("CELERY_BROKER")
+CELERY_RESULT_BACKEND = os.environ.get("CELERY_BACKEND")
+
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases

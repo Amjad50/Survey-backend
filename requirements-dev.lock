@@ -9,11 +9,27 @@
 #   generate-hashes: false
 #   universal: false
 
+amqp==5.2.0
+    # via kombu
 asgiref==3.8.1
     # via django
 attrs==24.2.0
     # via jsonschema
     # via referencing
+billiard==4.2.0
+    # via celery
+celery==5.4.0
+click==8.1.7
+    # via celery
+    # via click-didyoumean
+    # via click-plugins
+    # via click-repl
+click-didyoumean==0.3.1
+    # via celery
+click-plugins==1.1.1
+    # via celery
+click-repl==0.3.0
+    # via celery
 django==5.1
     # via django-auditlog
     # via django-cacheops
@@ -36,11 +52,16 @@ jsonschema==4.23.0
     # via drf-spectacular
 jsonschema-specifications==2023.12.1
     # via jsonschema
+kombu==5.4.0
+    # via celery
 packaging==24.1
     # via gunicorn
+prompt-toolkit==3.0.47
+    # via click-repl
 psycopg2==2.9.9
 psycopg2-binary==2.9.9
 python-dateutil==2.9.0.post0
+    # via celery
     # via django-auditlog
 python-dotenv==1.0.1
 pyyaml==6.0.2
@@ -57,5 +78,13 @@ six==1.16.0
     # via python-dateutil
 sqlparse==0.5.1
     # via django
+tzdata==2024.1
+    # via celery
 uritemplate==4.1.1
     # via drf-spectacular
+vine==5.1.0
+    # via amqp
+    # via celery
+    # via kombu
+wcwidth==0.2.13
+    # via prompt-toolkit
