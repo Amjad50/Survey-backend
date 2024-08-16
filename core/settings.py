@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "drf_spectacular",
     "drf_spectacular_sidecar",
     "auditlog",
+    "cacheops",
 ]
 
 REST_FRAMEWORK = {
@@ -102,6 +103,35 @@ DATABASES = {
         "HOST": "localhost",
         "PORT": "5432",
     }
+}
+
+CACHEOPS_REDIS = {
+    "host": "localhost",  # redis-server is on same machine
+    "port": 6379,  # default redis port
+    # SELECT non-default redis database
+    # using separate redis db or redis instance
+    # is highly recommended
+    "db": 1,
+}
+
+CACHEOPS_DEFAULTS = {
+    'timeout': 60*60
+}
+
+CACHEOPS = {
+    # Automatically cache any User.objects.get() calls for 15 minutes
+    # This also includes .first() and .last() calls,
+    # as well as request.user or post.author access,
+    # where Post.author is a foreign key to auth.User
+    "auth.user": {"ops": "get", "timeout": 60 * 15},
+    # Automatically cache all gets and queryset fetches
+    # to other django.contrib.auth models for an hour
+    "auth.*": {"ops": {"fetch", "get"}},
+    # Cache all queries to Permission
+    # 'all' is an alias for {'get', 'fetch', 'count', 'aggregate', 'exists'}
+    "auth.permission": {"ops": "all"},
+    # Cache all surveys queries to 1 hour
+    "surveys.*": {"ops": "all"},
 }
 
 

@@ -16,15 +16,19 @@ attrs==24.2.0
     # via referencing
 django==5.1
     # via django-auditlog
+    # via django-cacheops
     # via djangorestframework
     # via drf-spectacular
     # via drf-spectacular-sidecar
 django-auditlog==3.0.0
+django-cacheops==7.0.2
 djangorestframework==3.15.2
     # via drf-spectacular
 drf-spectacular==0.27.2
 drf-spectacular-sidecar==2024.7.1
     # via drf-spectacular
+funcy==2.0
+    # via django-cacheops
 inflection==0.5.1
     # via drf-spectacular
 jsonschema==4.23.0
@@ -36,6 +40,8 @@ python-dateutil==2.9.0.post0
     # via django-auditlog
 pyyaml==6.0.2
     # via drf-spectacular
+redis==5.0.8
+    # via django-cacheops
 referencing==0.35.1
     # via jsonschema
     # via jsonschema-specifications
