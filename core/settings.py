@@ -48,8 +48,8 @@ REST_FRAMEWORK = {
 }
 
 SPECTACULAR_SETTINGS = {
-    "TITLE": "Survies API",
-    "DESCRIPTION": "Dyanamic Survey API",
+    "TITLE": "Surveys API",
+    "DESCRIPTION": "Dynamic Survey API",
     "VERSION": "1.0.0",
     "SERVE_INCLUDE_SCHEMA": False,
     "SWAGGER_UI_DIST": "SIDECAR",
