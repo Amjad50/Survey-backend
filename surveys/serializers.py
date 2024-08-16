@@ -12,6 +12,10 @@ from .models import (
 class FieldSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(required=False)
 
+    class Meta:
+        model = Field
+        exclude = ["section"]
+
     def validate(self, data):
         need_options = data["field_type"] in ["dropdown", "radio", "checkbox"]
 
@@ -36,14 +40,14 @@ class FieldSerializer(serializers.ModelSerializer):
             Field.objects.create(section=section, **field_data)
         return section
 
-    class Meta:
-        model = Field
-        exclude = ["section"]
-
 
 class SectionSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(required=False)
     fields = FieldSerializer(many=True)
+
+    class Meta:
+        model = Section
+        exclude = ["survey"]
 
     def create(self, validated_data):
         fields_data = validated_data.pop("fields", [])
@@ -70,10 +74,6 @@ class SectionSerializer(serializers.ModelSerializer):
                 Field.objects.create(section=instance, **field_data)
 
         return instance
-
-    class Meta:
-        model = Section
-        exclude = ["survey"]
 
 
 class SurveySerializer(serializers.ModelSerializer):
@@ -120,7 +120,7 @@ class SurveySerializer(serializers.ModelSerializer):
 class FieldResponseSerializer(serializers.ModelSerializer):
     class Meta:
         model = FieldResponse
-        fields = "__all__"
+        exclude = ["section_response"]
 
 
 class SectionResponseSerializer(serializers.ModelSerializer):
@@ -128,7 +128,7 @@ class SectionResponseSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = SectionResponse
-        fields = "__all__"
+        exclude = ["survey_response"]
 
 
 class SurveyResponseSerializer(serializers.ModelSerializer):

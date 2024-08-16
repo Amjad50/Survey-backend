@@ -325,7 +325,6 @@ components:
         required:
           type: boolean
         options:
-          type: string
           nullable: true
       required:
       - field_type
@@ -336,17 +335,12 @@ components:
         id:
           type: integer
           readOnly: true
-        value:
-          type: string
-          nullable: true
-        section_response:
-          type: integer
         field:
           type: integer
+        value: {}
       required:
       - field
       - id
-      - section_response
     FieldTypeEnum:
       enum:
       - text
@@ -424,21 +418,18 @@ components:
         id:
           type: integer
           readOnly: true
+        section:
+          type: integer
         field_responses:
           type: array
           items:
             $ref: '#/components/schemas/FieldResponse'
         completed:
           type: boolean
-        survey_response:
-          type: integer
-        section:
-          type: integer
       required:
       - field_responses
       - id
       - section
-      - survey_response
     Survey:
       type: object
       properties:

@@ -28,7 +28,7 @@ class Field(models.Model):
     label = models.CharField(max_length=255)
     field_type = models.CharField(max_length=50, choices=FIELD_TYPES)
     required = models.BooleanField(default=False)
-    options = models.TextField(
+    options = models.JSONField(
         blank=True, null=True
     )  # Used for dropdown, radio, checkbox options
 
@@ -54,4 +54,4 @@ class FieldResponse(models.Model):
         SectionResponse, related_name="field_responses", on_delete=models.CASCADE
     )
     field = models.ForeignKey(Field, on_delete=models.CASCADE)
-    value = models.TextField(blank=True, null=True)
+    value = models.JSONField(blank=True, null=False)
