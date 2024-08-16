@@ -6,6 +6,9 @@ from .models import (
     SurveyResponse,
     SectionResponse,
     FieldResponse,
+    SurveyAnalytics,
+    SectionAnalytics,
+    FieldAnalytics,
 )
 
 from .tasks import update_survey_analytics
@@ -346,3 +349,34 @@ class SurveyResponseSerializer(serializers.ModelSerializer):
         update_survey_analytics.delay_on_commit(instance.survey.id)
 
         return instance
+
+
+class FieldAnalyticsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FieldAnalytics
+        fields = ["field_id", "number_of_responses", "common_responses", "for_number"]
+
+
+class SectionAnalyticsSerializer(serializers.ModelSerializer):
+    field_analytics = FieldAnalyticsSerializer(many=True)
+
+    class Meta:
+        model = SectionAnalytics
+        fields = ["section_id", "field_analytics"]
+
+
+class SurveyAnalyticsSerializer(serializers.ModelSerializer):
+    section_analytics = SectionAnalyticsSerializer(many=True)
+
+    class Meta:
+        model = SurveyAnalytics
+        fields = [
+            "survey_id",
+            "total_responses",
+            "completed_responses",
+            "section_analytics",
+            "unique_users",
+            "max_responses",
+            "max_responses_user",
+            "average_responses_per_user",
+        ]
