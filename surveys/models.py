@@ -1,4 +1,5 @@
 from django.db import models
+from auditlog.registry import auditlog
 
 
 class Survey(models.Model):
@@ -55,3 +56,11 @@ class FieldResponse(models.Model):
     )
     field = models.ForeignKey(Field, on_delete=models.CASCADE)
     value = models.JSONField(blank=True, null=False)
+
+
+auditlog.register(Survey)
+auditlog.register(Section)
+auditlog.register(Field)
+auditlog.register(SurveyResponse)
+auditlog.register(SectionResponse)
+auditlog.register(FieldResponse)

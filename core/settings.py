@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "surveys",
     "drf_spectacular",
     "drf_spectacular_sidecar",
+    "auditlog",
 ]
 
 REST_FRAMEWORK = {
@@ -65,6 +66,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "auditlog.middleware.AuditlogMiddleware",
 ]
 
 ROOT_URLCONF = "core.urls"

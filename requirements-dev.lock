@@ -15,9 +15,11 @@ attrs==24.2.0
     # via jsonschema
     # via referencing
 django==5.1
+    # via django-auditlog
     # via djangorestframework
     # via drf-spectacular
     # via drf-spectacular-sidecar
+django-auditlog==3.0.0
 djangorestframework==3.15.2
     # via drf-spectacular
 drf-spectacular==0.27.2
@@ -30,6 +32,8 @@ jsonschema==4.23.0
 jsonschema-specifications==2023.12.1
     # via jsonschema
 psycopg2==2.9.9
+python-dateutil==2.9.0.post0
+    # via django-auditlog
 pyyaml==6.0.2
     # via drf-spectacular
 referencing==0.35.1
@@ -38,6 +42,8 @@ referencing==0.35.1
 rpds-py==0.20.0
     # via jsonschema
     # via referencing
+six==1.16.0
+    # via python-dateutil
 sqlparse==0.5.1
     # via django
 uritemplate==4.1.1
