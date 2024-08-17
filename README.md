@@ -1,3 +1,3 @@
-# exam
+# Survey backend in Django
 
-Describe your project here.
+run with `docker compose up`
